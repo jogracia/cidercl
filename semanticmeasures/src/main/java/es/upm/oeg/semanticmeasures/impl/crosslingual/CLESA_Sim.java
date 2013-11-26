@@ -31,8 +31,15 @@ abstract public class CLESA_Sim implements CLRelatedness {
 		setLanguageSource(null); 
 		setLanguageTarget(null);
 		if(started == false) {
-			clesaService  = new CLESA(configFilePath);
-			started = true;
+			try{
+				clesaService  = new CLESA(configFilePath);
+				started = true;
+			} catch(Exception e){
+		
+				System.err.println("\n\nCheck if the error comes as if no wiki index in the path. \nDownload wiki indices for clesa (en, es, de, nl, fr, pt) from this link: https://dl.dropboxusercontent.com/u/40572132/compSixth.zip . \n " +
+						"Unzip it and provide the indexpath in the config file: eu.monnetproject.clesa.CLESA.properties or whatever being used. \n" +
+						"Increase the heap space as the size of index is around 1 GB and it goes fully to the RAM. \n\n ");
+			}
 		}
 	}
 
@@ -42,8 +49,14 @@ abstract public class CLESA_Sim implements CLRelatedness {
 		setLanguageTarget(lang2);
 
 		if(started == false) {
-			clesaService = new CLESA(configFilePath);
-			started = true;
+			try{
+				clesaService = new CLESA(configFilePath);
+				started = true;
+			} catch(Exception e){
+				System.err.println("\n\nCheck if the error comes as if no wiki index in the path. \nDownload wiki indices for clesa (en, es, de, nl, fr, pt) from this link: https://dl.dropboxusercontent.com/u/40572132/compSixth.zip . \n " +
+						"Unzip it and provide the indexpath in the config file: eu.monnetproject.clesa.CLESA.properties or whatever being used. \n" +
+						"Increase the heap space as the size of index is around 1 GB and it goes fully to the RAM. \n\n ");
+			}
 		}
 	}
 
