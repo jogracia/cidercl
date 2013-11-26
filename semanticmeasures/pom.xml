@@ -16,6 +16,15 @@
 		</dependency>
 
 
+
+		<dependency>
+			<groupId>com.wcohen</groupId>
+			<artifactId>ss</artifactId>
+			<version>1.0.0</version>
+			<scope>system</scope>
+			<systemPath>${project.basedir}/lib/clesa.jar</systemPath>
+		</dependency>
+
 		<dependency>
 			<groupId>com.wcohen</groupId>
 			<artifactId>ss</artifactId>

@@ -16,10 +16,9 @@ import com.hp.hpl.jena.ontology.OntResource;
 import es.upm.oeg.cidercl.extraction.OntologyExtractor;
 import es.upm.oeg.cidercl.util.ANNUtil;
 import es.upm.oeg.cidercl.util.OntologyUtil;
-import es.upm.oeg.cidercl.util.StopWords;
 import es.upm.oeg.semanticmeasures.RelatednessBetweenOntologyEntities;
-import eu.monnetproject.wsd.utils.Language;
-import eu.monnetproject.wsd.utils.Pair;
+import eu.monnetproject.clesa.core.lang.Language;
+import eu.monnetproject.clesa.core.utils.Pair;
 
 
 /**
@@ -28,7 +27,7 @@ import eu.monnetproject.wsd.utils.Pair;
  * @author Jorge Gracia
  *
  */
-public class CLESABetweenOntologyEntities  extends CLESA implements RelatednessBetweenOntologyEntities{
+public class CLESABetweenOntologyEntities  extends CLESA_Sim implements RelatednessBetweenOntologyEntities{
 
 	//attributes
 	private static double DEFAULT_SCORE = 0.0; //If the value is set to -1 it will be interpreted as "missing value"
@@ -98,13 +97,10 @@ public class CLESABetweenOntologyEntities  extends CLESA implements RelatednessB
 		if (labelsTarget.isEmpty()) labelsTarget.add(OntologyExtractor.getUriFragment(model2, uri2));
 	
 		// Compute CLESA
-		StopWords stopWords = new StopWords();
-		String filteredLabelsSource = (String) stopWords.removeStopWords(Language.getLanguage(langSource), labelsSource.toString());
-		String filteredLabelsTarget = (String) stopWords.removeStopWords(Language.getLanguage(langTarget), labelsTarget.toString());
-		Pair<String, Language> pair1 = new Pair<String, Language>(filteredLabelsSource, Language.getLanguage(langSource));
-		Pair<String, Language> pair2 = new Pair<String, Language>(filteredLabelsTarget, Language.getLanguage(langTarget));
+		Pair<String, Language> pair1 = new Pair<String, Language>(labelsSource.toString(), Language.getByIso639_1(langSource));
+		Pair<String, Language> pair2 = new Pair<String, Language>(labelsTarget.toString(), Language.getByIso639_1(langTarget));
 		
-		return CLESA.score(pair1, pair2);
+		return CLESA_Sim.score(pair1, pair2);
 
 		
 	}
@@ -128,14 +124,10 @@ public class CLESABetweenOntologyEntities  extends CLESA implements RelatednessB
 		
 		if (commentSource.equals("") || commentTarget.equals("")) return DEFAULT_SCORE;
 		else {
-			// Compute CLESA
-			StopWords stopWords = new StopWords();
-			String filteredCommentSource = (String) stopWords.removeStopWords(Language.getLanguage(langSource), commentSource);
-			String filteredCommentTarget = (String) stopWords.removeStopWords(Language.getLanguage(langTarget), commentTarget);
-			Pair<String, Language> pair1 = new Pair<String, Language>(filteredCommentSource, Language.getLanguage(langSource));
-			Pair<String, Language> pair2 = new Pair<String, Language>(filteredCommentTarget, Language.getLanguage(langTarget));
-		
-			return CLESA.score(pair1, pair2);
+			// Compute CLESA	
+			Pair<String, Language> pair1 = new Pair<String, Language>(commentSource, Language.getByIso639_1(langSource));
+			Pair<String, Language> pair2 = new Pair<String, Language>(commentTarget, Language.getByIso639_1(langTarget));		
+			return CLESA_Sim.score(pair1, pair2);
 		}
 		
 	}
@@ -414,16 +406,11 @@ public class CLESABetweenOntologyEntities  extends CLESA implements RelatednessB
 					termsLabelsTarget.addAll(termLabels);
 				}
 				
-				// Compute CLESA
-				StopWords stopWords = new StopWords();
-				String filteredTermsLabelsSource = (String) stopWords.removeStopWords(Language.getLanguage(langSource), termsLabelsSource.toString());
-				String filteredTermsLabelsTarget = (String) stopWords.removeStopWords(Language.getLanguage(langTarget), termsLabelsTarget.toString());
-					
-				
-				Pair<String, Language> pair1 = new Pair<String, Language>(filteredTermsLabelsSource, Language.getLanguage(langSource));
-				Pair<String, Language> pair2 = new Pair<String, Language>(filteredTermsLabelsTarget, Language.getLanguage(langTarget));
+				// Compute CLESA				
+				Pair<String, Language> pair1 = new Pair<String, Language>(termsLabelsSource.toString(), Language.getByIso639_1(langSource));
+				Pair<String, Language> pair2 = new Pair<String, Language>(termsLabelsTarget.toString(), Language.getByIso639_1(langTarget));
 			
-				score = CLESA.score(pair1, pair2);	
+				score = CLESA_Sim.score(pair1, pair2);	
 			}
 			
 		}
