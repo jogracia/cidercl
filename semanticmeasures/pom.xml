@@ -18,8 +18,8 @@
 
 
 		<dependency>
-			<groupId>com.wcohen</groupId>
-			<artifactId>ss</artifactId>
+			<groupId>eu.monnetproject</groupId>
+			<artifactId>clesa</artifactId>
 			<version>1.0.0</version>
 			<scope>system</scope>
 			<systemPath>${project.basedir}/lib/clesa.jar</systemPath>
